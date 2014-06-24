@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<title>IO Checkbox demo</title>
+<link href="io.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Roboto:400,300,100" rel="stylesheet">
+</head>
+<body>
+  <template id="checkbox-template">
+    <style>
+      :host {
+        -webkit-appearance: none;
+        border: none;
+        background-color: #fff;
+        margin: 0 24px 0 0;
+        height: 24px;
+        width: 24px;
+        outline: none;
+        padding: 2px;
+        display: inline-block;
+        vertical-align: bottom;
+      }
+      :host(:focus) {
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 7px, #03a0f4 8px, rgba(0, 0, 0, 0) 12px, rgba(0, 0, 0, 0) 100%);
+      }
+      :host::shadow #circle {
+        background-color: #fff;
+        border-color: #717171;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: 14px auto;
+        border-radius: 10px;
+        display: inline-block;
+        border-style: solid;
+        border-width: 2px;
+        height: 16px;
+        width: 16px;
+        outline: none;
+      }
+      :host(:checked)::shadow #circle, :host(:hover)::shadow #circle {
+        background-color: #3f51b5;
+        border-color: #3f51b5;
+      }
+      :host(:checked)::shadow #circle {
+        background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9Ikljb25zIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjIwcHgiIGhlaWdodD0iMTVweCIgdmlld0JveD0iMCAwIDIwIDE1IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMCAxNSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cG9seWdvbiBmaWxsPSIjRkZGRkZGIiBwb2ludHM9IjcuMTQzLDE0LjkzOCAwLDcuNzk2IDIuMDIxLDUuNzc2IDcuMTQzLDEwLjg5OCAxNy45NzksMC4wNjIgMjAsMi4wODIgIi8+DQo8L3N2Zz4NCg==');
+      }
+    </style>
+    <div id="circle"></div>
+  </template>
+<script>
+var $ = document.querySelector;
+function IOCheckbox() {}
+IOCheckbox.prototype = {
+  __proto__: HTMLInputElement.prototype,
+  template: document.querySelector('template#checkbox-template'),
+  toggleChecked: function() {
+    console.log('checked?', this.checked);
+    this.checked = !this.checked;
+  },
+  createdCallback: function() {
+    this.createShadowRoot();
+    console.log('template: ', this.template);
+    this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+    console.log('Checkbox created');
+    this.addEventListener('click', this.toggleChecked.bind(this));
+  },
+  attributeChangedCallback: function(name, oldValue, newValue) {
+    console.log('MyInput attributeChangedCallback', name, oldValue, newValue);
+  }
+};
+IOCheckbox.extends = 'input';
+document.registerElement('io-checkbox', IOCheckbox);
+</script>
+<label>
+  <input type="checkbox" is="io-checkbox" checked></input>
+  <span>Design</span>
+</label>
+<script>
+var checkbox = document.querySelector('input[is="io-checkbox"]');
+console.log('checkbox: ', checkbox);
+</script>
+</body>
+</html>
