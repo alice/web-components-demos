@@ -52,9 +52,11 @@ IOCustomCheckbox.prototype = {
   set checked(isChecked) {
     if (isChecked) {
       this.setAttribute('checked', true);
+      this.setAttribute('aria-checked', 'true');
       this.shadowRoot.querySelector('#circle').setAttribute('checked', true);
     } else {
       this.removeAttribute('checked');
+      this.removeAttribute('aria-checked');
       this.shadowRoot.querySelector('#circle').removeAttribute('checked');
     }
     if (isChecked && this.type == "radio") {
@@ -79,6 +81,9 @@ IOCustomCheckbox.prototype = {
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
     this.addEventListener('click', this.toggleChecked.bind(this));
     this.addEventListener('keydown', this.handleKeyDown.bind(this), true);
+    this.setAttribute('role',
+                       this.getAttribute('type') == 'radio' ? 'radio'
+                                                            : 'checkbox');
   },
   attributeChangedCallback: function(name, oldValue, newValue) {
     if (name == 'checked')
