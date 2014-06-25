@@ -1,12 +1,4 @@
-<!doctype html>
-<html>
-<head>
-<title>IO Checkbox demo</title>
-<link href="io.css" rel="stylesheet">
-<link href="http://fonts.googleapis.com/css?family=Roboto:400,300,100" rel="stylesheet">
-</head>
-<body>
-  <template id="checkbox-template">
+<template id="checkbox-template">
     <style>
       :host {
         -webkit-appearance: none;
@@ -48,38 +40,64 @@
       }
     </style>
     <div id="circle"></div>
-  </template>
+</template>
 <script>
-var $ = document.querySelector;
 function IOCheckbox() {}
 IOCheckbox.prototype = {
   __proto__: HTMLInputElement.prototype,
-  template: document.querySelector('template#checkbox-template'),
-  toggleChecked: function() {
-    console.log('checked?', this.checked);
-    this.checked = !this.checked;
-  },
   createdCallback: function() {
     this.createShadowRoot();
-    console.log('template: ', this.template);
+    this.template = document.querySelector('#checkbox-template');
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
-    console.log('Checkbox created');
     this.addEventListener('click', this.toggleChecked.bind(this));
+    this.addEventListener('keydown', this.handleKeyDown.bind(this), true);
   },
   attributeChangedCallback: function(name, oldValue, newValue) {
     console.log('MyInput attributeChangedCallback', name, oldValue, newValue);
-  }
+  },
+  toggleChecked: function() {
+    if (this.checked && this.type == "radio")
+      return;
+    this.checked = !this.checked;
+  },
+  handleKeyDown: function() {
+    var keyIdentifier = event.keyIdentifier || event.key;
+    if (keyIdentifier.match(/^U\+/)) {
+      var code = Number.parseInt(keyIdentifier.replace(/^U\+/, ''), 16);
+      keyIdentifier = String.fromCharCode(code);
+    }
+    switch(keyIdentifier) {
+      case "Enter":
+      case " ":  // space
+        this.toggleChecked();
+        break;
+      case "Up":
+        if (this.selectSiblingRadioButton(-1))
+          event.preventDefault();
+        break;
+      case "Down":
+        if (this.selectSiblingRadioButton(1))
+          event.preventDefault();
+        break;
+    }
+  },
+  selectSiblingRadioButton: function(delta) {
+    var siblings = document.querySelectorAll('input[type="radio"][name="' + this.name + '"]');
+    var found = false;
+    for (var i = 0; i < siblings.length; i++) {
+      if (siblings[i] == this)
+        break;
+    }
+    if ((delta < 0 && i > 0) || (delta > 0 && i < siblings.length - 1)) {
+      var previousRadioButton = siblings[i + delta];
+      previousRadioButton.focus();
+      previousRadioButton.checked = true;
+      return true;
+    }
+    return false;
+  },
+
 };
 IOCheckbox.extends = 'input';
 document.registerElement('io-checkbox', IOCheckbox);
 </script>
-<label>
-  <input type="checkbox" is="io-checkbox" checked></input>
-  <span>Design</span>
-</label>
-<script>
-var checkbox = document.querySelector('input[is="io-checkbox"]');
-console.log('checkbox: ', checkbox);
-</script>
-</body>
-</html>
