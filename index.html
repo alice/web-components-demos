@@ -5,100 +5,145 @@
 <link href="io.css" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,100" rel="stylesheet">
 <link href="./io-checkbox.html" rel="import">
+<link href="./io-custom-checkbox.html" rel="import">
 </head>
 <body>
 <script>
-var link = document.querySelector('link[rel="import"]');
-var template = link.import.querySelector('template');
-document.body.appendChild(template);
-var script = link.import.querySelector('script');
-document.body.appendChild(script);
+var links = document.querySelectorAll('link[rel="import"]');
+for (var i = 0; i < links.length; i++) {
+  var link = links[i];
+  console.log('link', link);
+  var template = link.import.querySelector('template');
+  document.body.appendChild(template);
+  var script = link.import.querySelector('script');
+  document.body.appendChild(script);
+}
 </script>
 <table role="presentation">
-<tr>
-<td>
-<div class="spacer">
-  <label>
-    <input type="checkbox" is="io-checkbox"></input>
-    <span>Checkbox 1</span>
-  </label>
-</div>
-<div class="spacer">
-  <label>
-    <input type="checkbox" is="io-checkbox"></input>
-    <span>Checkbox 2</span>
-  </label>
-</div>
-<div class="spacer">
-  <label>
-    <input type="checkbox" is="io-checkbox"></input>
-    <span>Checkbox 3</span>
-  </label>
-</div>
-</td>
-<td>
-<div class="spacer">
-  <label>
-    <input type="checkbox"></input>
-    <span>Checkbox 1</span>
-  </label>
-</div>
-<div class="spacer">
-  <label>
-    <input type="checkbox"></input>
-    <span>Checkbox 2</span>
-  </label>
-</div>
-<div class="spacer">
-  <label>
-    <input type="checkbox"></input>
-    <span>Checkbox 3</span>
-  </label>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<div class="spacer">
-  <label>
-    <input name="radio" type="radio" is="io-checkbox"></input>
-    <span>Radio 1</span>
-  </label>
-</div>
-<div class="spacer">
-  <label>
-    <input name="radio" type="radio" is="io-checkbox"></input>
-    <span>Radio 2</span>
-  </label>
-</div>
-<div class="spacer">
-  <label>
-    <input name="radio" type="radio" is="io-checkbox"></input>
-    <span>Radio 3</span>
-  </label>
-</div>
-</td>
-<td>
-<div class="spacer">
-  <label>
-    <input name="native-radio" type="radio" ></input>
-    <span>Radio 1</span>
-  </label>
-</div>
-<div class="spacer">
-  <label>
-    <input name="native-radio" type="radio" ></input>
-    <span>Radio 2</span>
-  </label>
-</div>
-<div class="spacer">
-  <label>
-    <input name="native-radio" type="radio"></input>
-    <span>Radio 3</span>
-  </label>
-</div>
-</td>
-</tr>
+  <tr>
+    <td>
+      <div class="spacer">
+        <label>
+          <input type="checkbox" is="io-checkbox"></input>
+          <span>Checkbox 1</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <input type="checkbox" is="io-checkbox"></input>
+          <span>Checkbox 2</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <input type="checkbox" is="io-checkbox"></input>
+          <span>Checkbox 3</span>
+        </label>
+      </div>
+    </td>
+    <td>
+      <div class="spacer">
+        <label>
+          <io-custom-checkbox></io-custom-checkbox>
+          <span>Checkbox 1</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <io-custom-checkbox></io-custom-checkbox>
+          <span>Checkbox 2</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <io-custom-checkbox></io-custom-checkbox>
+          <span>Checkbox 3</span>
+        </label>
+      </div>
+    </td>
+    <td>
+      <div class="spacer">
+        <label>
+          <input type="checkbox"></input>
+          <span>Checkbox 1</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <input type="checkbox"></input>
+          <span>Checkbox 2</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <input type="checkbox"></input>
+          <span>Checkbox 3</span>
+        </label>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div class="spacer">
+        <label>
+          <input name="radio" type="radio" is="io-checkbox"></input>
+          <span>Radio 1</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <input name="radio" type="radio" is="io-checkbox"></input>
+          <span>Radio 2</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <input name="radio" type="radio" is="io-checkbox"></input>
+          <span>Radio 3</span>
+        </label>
+      </div>
+    </td>
+    <td>
+      <div class="spacer">
+        <label>
+          <io-custom-checkbox name="custom-radio" type="radio"></io-custom-checkbox>
+          <span>Radio 1</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <io-custom-checkbox name="custom-radio" type="radio"></io-custom-checkbox>
+          <span>Radio 2</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <io-custom-checkbox name="custom-radio" type="radio"></io-custom-checkbox>
+          <span>Radio 3</span>
+        </label>
+      </div>
+    </td>
+    <td>
+      <div class="spacer">
+        <label>
+          <input name="native-radio" type="radio" ></input>
+          <span>Radio 1</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <input name="native-radio" type="radio" ></input>
+          <span>Radio 2</span>
+        </label>
+      </div>
+      <div class="spacer">
+        <label>
+          <input name="native-radio" type="radio"></input>
+          <span>Radio 3</span>
+        </label>
+      </div>
+    </td>
+  </tr>
 </table>
 </body>
 </html>
